@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+ 
+<struts>
+	<package name="contract_package" namespace="/contractAction" extends="json-default,interceptor" strict-method-invocation="false">
+		<action name="*" class="contractAction" method="{1}">
+
+			<result name="check_success">
+				/WEB-INF/views/contract/contractCheck.jsp
+			</result>
+
+			<result name="contract_index">
+				/WEB-INF/views/contract/contractList.jsp
+			</result>
+
+			<interceptor-ref name="loginInterceptorStack"/>
+		</action>
+	</package>
+</struts> 
+     

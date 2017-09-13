@@ -1,0 +1,107 @@
+package com.scut.crm.action;
+
+import com.alibaba.fastjson.JSON;
+import com.scut.crm.constant.PageReturnConst;
+import com.scut.crm.dao.po.Customer;
+import com.scut.crm.entity.Pagination;
+import com.scut.crm.service.impl.CustomerServiceImpl;
+import com.scut.crm.utils.ConvertEntityUtils;
+import com.scut.crm.utils.ScopeUtils;
+import com.scut.crm.web.vo.CustomerQueryRequest;
+import com.scut.crm.web.vo.CustomerSaveRequest;
+import com.scut.crm.web.vo.CustomerUpdateRequest;
+import lombok.Data;
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Controller;
+
+import java.lang.reflect.InvocationTargetException;
+import java.util.Map;
+
+@Data
+@Scope("prototype")
+@Controller
+public class CustomerAction {
+
+	private Logger logger = Logger.getLogger(CustomerAction.class);
+
+	private CustomerQueryRequest queryRequest;
+
+	private CustomerSaveRequest saveRequest;
+
+	private String customerId;
+
+	private String detailJson;
+
+	private String deleteJson;
+
+	private String updateJson;
+
+	private CustomerUpdateRequest updateRequest;
+
+	@Autowired
+	private CustomerServiceImpl customerService;
+
+	/**
+	 * 客户列表
+	 * @return
+	 * @throws InvocationTargetException
+	 * @throws IllegalAccessException
+	 */
+	public String list() throws InvocationTargetException, IllegalAccessException {
+		/**queryRequest转换成customer*/
+		Map<String,Object> map = ConvertEntityUtils.fromQueryRequest2Customer(queryRequest);
+		Pagination<Customer> pagination = customerService.listByPage(map);
+		ScopeUtils.getRequestMap().put("pagination",pagination);
+		/**返回到主页面*/
+		return PageReturnConst.CUST_INDEX;
+	}
+
+	/**
+	 * 客户添加
+	 * @return
+	 * @throws InvocationTargetException
+	 * @throws IllegalAccessException
+	 */
+	public String add() throws InvocationTargetException, IllegalAccessException {
+		/**saveRequest转换成customer*/
+		Customer customer = ConvertEntityUtils.fromSaveRequest2Customer(saveRequest);
+		customerService.save(customer);
+		/**返回到主页面*/
+		return PageReturnConst.ADD_SUCCESS;
+	}
+
+	/**
+	 * 客户删除
+	 * @return
+	 */
+	public String delete(){
+		customerService.remove(new Customer(Integer.valueOf(customerId)));
+		deleteJson = PageReturnConst.DELETE_SUCCESS;
+		return deleteJson;
+	}
+
+	/**
+	 * 客户更新
+	 * @return
+	 */
+	public String update() throws InvocationTargetException, IllegalAccessException {
+		Customer customer = ConvertEntityUtils.fromUpdateRequest2Customer(updateRequest);
+		customerService.update(customer);
+		updateJson = PageReturnConst.UPDATE_SUCCESS;
+		return updateJson;
+	}
+
+	/**
+	 * 客户详细信息
+	 * @return
+	 */
+	public String detail() throws InvocationTargetException, IllegalAccessException {
+		Customer customer = customerService.getById(Integer.valueOf(customerId));
+		CustomerUpdateRequest updateRequest = ConvertEntityUtils.fromCustomer2UpdateRequest(customer);
+		/**转换为json格式*/
+		detailJson = JSON.toJSONString(updateRequest);
+		return PageReturnConst.DETAIL_SUCCESS;
+	}
+}
