@@ -82,7 +82,7 @@
 								<td>${customer.nature}</td>
 								<td>${customer.opportunity}</td>
 								<td>${customer.phone}</td>
-								<td>${fn:length(customer.contractList)}</td>
+								<td>${fn:length(customer.contractSet)}</td>
 								<td>${customer.editTime}</td>
 								<td>
 									<a href="javascript:void(0);"  onclick="editCustomer(${customer.id})" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#customerEditDialog">修改</a>

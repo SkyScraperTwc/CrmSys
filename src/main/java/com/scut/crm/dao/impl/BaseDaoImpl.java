@@ -167,7 +167,8 @@ public class BaseDaoImpl implements IBaseDao {
 					query.setParameter(i, param[i]);
 				}
 			}
-			records = Integer.valueOf(query.uniqueResult().toString());
+			Long count = (Long) query.uniqueResult();
+			records = count.intValue();
 			tran.commit();
 		} catch (Exception e) {
 			e.printStackTrace();

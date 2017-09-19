@@ -22,6 +22,5 @@ public abstract class AbstractBaseService<T> implements IBaseService<T> {
     public int save(T object) {
        return baseDao.save(object);
     }
-
 }
 

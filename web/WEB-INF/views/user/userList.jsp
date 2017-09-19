@@ -21,7 +21,7 @@
 							<th>用户名称</th>
 							<th>性别</th>
 							<th>手机</th>
-							<th>客户数目</th>
+							<th>客户数量</th>
 							<th>修改时间</th>
 							<th>操作</th>
 						</tr>
@@ -33,7 +33,7 @@
 								<td>${user.username}</td>
 								<td>${user.sex}</td>
 								<td>${user.phone}</td>
-								<td>${fn:length(user.customerList)}</td>
+								<td>${fn:length(user.customerSet)}</td>
 								<td>${user.editTime}</td>
 								<td>
 									<a href="javascript:void(0);"  onclick="editUser(${user.id})" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#userEditDialog">修改</a>

@@ -1,13 +1,13 @@
 package com.scut.crm.dao.po;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
-@Data
+@Setter
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Customer {
@@ -58,11 +58,11 @@ public class Customer {
 	/**
 	 * 合同列表
 	 */
-	private List<Contract> contractList;
+	private Set<Contract> contractSet;
 	/**
 	 * 用户ID
 	 */
-	private String userId;
+	private User user;
 	/**
 	 * 创建时间
 	 */
@@ -74,5 +74,25 @@ public class Customer {
 
 	public Customer(Integer id){
 		this.id = id;
+	}
+
+	@Override
+	public String toString() {
+		return "Customer{" +
+				"id=" + id +
+				", name='" + name + '\'' +
+				", zipcode='" + zipcode + '\'' +
+				", phone='" + phone + '\'' +
+				", address='" + address + '\'' +
+				", level='" + level + '\'' +
+				", source='" + source + '\'' +
+				", industry='" + industry + '\'' +
+				", annualTurnover='" + annualTurnover + '\'' +
+				", nature='" + nature + '\'' +
+				", opportunity='" + opportunity + '\'' +
+				", userId=" + user.getId() +
+				", createTime=" + createTime +
+				", editTime=" + editTime +
+				'}';
 	}
 }

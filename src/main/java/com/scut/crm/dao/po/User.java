@@ -1,13 +1,13 @@
 package com.scut.crm.dao.po;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
-@Data
+@Setter
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 public class User {
@@ -34,7 +34,7 @@ public class User {
 	/**
 	 * 客户列表
 	 */
-	private List<Customer> customerList;
+	private Set<Customer> customerSet;
 	/**
 	 * 创建时间
 	 */
@@ -44,4 +44,16 @@ public class User {
 	 */
 	private Date editTime;
 
+	@Override
+	public String toString() {
+		return "User{" +
+				"id=" + id +
+				", username='" + username + '\'' +
+				", password='" + password + '\'' +
+				", sex='" + sex + '\'' +
+				", phone='" + phone + '\'' +
+				", createTime=" + createTime +
+				", editTime=" + editTime +
+				'}';
+	}
 }

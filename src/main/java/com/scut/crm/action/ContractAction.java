@@ -5,7 +5,6 @@ import com.scut.crm.dao.po.Contract;
 import com.scut.crm.dao.po.Customer;
 import com.scut.crm.entity.Pagination;
 import com.scut.crm.service.impl.ContractServiceImpl;
-import com.scut.crm.service.impl.CustomerServiceImpl;
 import com.scut.crm.utils.ScopeUtils;
 import lombok.Data;
 import org.apache.log4j.Logger;

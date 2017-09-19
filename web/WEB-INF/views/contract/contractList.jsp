@@ -34,7 +34,7 @@
 									<td>${contract.type}</td>
 									<td>${contract.state}</td>
 									<td>${contract.money}</td>
-									<td>${contract.customerName}</td>
+									<td>${contract.customer.name}</td>
 									<td>${contract.editTime}</td>
 								</tr>
 							</c:forEach>

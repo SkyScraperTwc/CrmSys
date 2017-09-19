@@ -8,6 +8,7 @@ import com.scut.crm.entity.Pagination;
 import com.scut.crm.dao.po.User;
 import com.scut.crm.service.AbstractBaseService;
 import com.scut.crm.utils.ScopeUtils;
+import lombok.extern.log4j.Log4j;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,19 +18,14 @@ import java.util.List;
 import java.util.Map;
 
 @Service
+@Log4j
 public class CustomerServiceImpl extends AbstractBaseService<Customer> {
-
-	private Logger logger = Logger.getLogger(CustomerServiceImpl.class);
 
 	@Autowired
 	private BaseDaoImpl baseDao;
 
-	@Autowired
-	private ContractServiceImpl contractService;
-
 	@Override
 	public Pagination<Customer> listByPage(Map<String,Object> map) {
-		logger.info("map---"+map);
 		String hql = "select customer from Customer customer where 1=1";
 		StringBuffer joint = new StringBuffer("");
 		List<Object> paramList = new ArrayList<>();
@@ -52,8 +48,8 @@ public class CustomerServiceImpl extends AbstractBaseService<Customer> {
 		User user = (User) ScopeUtils.getSessionMap().get("user");
 		String userId = String.valueOf(user.getId());
 		if(null!=userId && !userId.isEmpty()){
-			joint.append(" and customer.userId=?");
-			paramList.add(userId);
+			joint.append(" and customer.user.id=?");
+			paramList.add(Integer.valueOf(userId));
 		}
 		if(null==currentPage || currentPage.isEmpty()){
 			/**currentPage=1*/
@@ -76,25 +72,24 @@ public class CustomerServiceImpl extends AbstractBaseService<Customer> {
 			paramList.add(customerLevel);
 		}
 		hql = hql + joint.toString();
+
 		/**获取totalRecords*/
 		int totalRecords = this.getTotalRecords(joint.toString(), paramList.toArray());
+
 		/**查询customerList*/
 		List<Customer> customerList = baseDao.queryByPage(hql, paramList.toArray(), Integer.valueOf(currentPage), PaginationPropertyConst.PAGE_SIZE_TEN);
-		for (Customer cust:customerList) {
-			List<Contract> contractList = contractService.listByForeignKey(String.valueOf(cust.getId()));
-			cust.setContractList(contractList);
-		}
+
 		/**构建pagination*/
 		Pagination<Customer> pagination = new Pagination<>(totalRecords, Integer.valueOf(currentPage), PaginationPropertyConst.PAGE_SIZE_TEN, customerList);
-		logger.info("Pagination<Customer>---hql----"+hql);
-		logger.info("Pagination<Customer>---paramList----"+paramList);
-		logger.info("Pagination<Customer>---pagination----"+pagination);
+		log.info("Pagination<Customer>---hql----"+hql);
+		log.info("Pagination<Customer>---paramList----"+paramList);
+		log.info("Pagination<Customer>---pagination----"+pagination);
 		return pagination;
 	}
 
 	@Override
 	public List<Customer> listByForeignKey(String id) {
-		String hql = "select customer from Customer customer where customer.userId=?";
+		String hql = "select customer from Customer customer where customer.user.id=?";
 		List<Object> paramList = new ArrayList<>();
 		paramList.add(id);
 		return baseDao.queryList(hql,paramList.toArray());
@@ -106,8 +101,8 @@ public class CustomerServiceImpl extends AbstractBaseService<Customer> {
 		String hql = "select count(*) from Customer customer where 1=1";
 		hql = hql + joint;
 		int totalRecords = baseDao.count(hql, params);
-		logger.info("getTotalRecords----hql---"+hql);
-		logger.info("getTotalRecords----totalRecords----"+totalRecords);
+		log.info("getTotalRecords----hql---"+hql);
+		log.info("getTotalRecords----totalRecords----"+totalRecords);
 		return totalRecords;
 	}
 

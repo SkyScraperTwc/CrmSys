@@ -11,5 +11,4 @@ public final class EntityPropertyConst {
     public final static String FOUR = "4";
 
     public final static String FIVE = "5";
-
 }

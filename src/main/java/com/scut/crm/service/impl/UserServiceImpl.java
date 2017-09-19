@@ -23,9 +23,6 @@ public class UserServiceImpl extends AbstractBaseService<User>{
     @Autowired
     private BaseDaoImpl baseDao;
 
-    @Autowired
-    private CustomerServiceImpl customerService;
-
     public boolean login(String username, String password) {
         String hql = "select user from User user where user.username=?";
         Object[] param = {username};
@@ -55,10 +52,6 @@ public class UserServiceImpl extends AbstractBaseService<User>{
         int totalRecords = this.getTotalRecords(joint.toString(), null);
         /**查询userList*/
         List<User> dataList = baseDao.queryByPage(hql, null, Integer.valueOf(currentPage), PaginationPropertyConst.PAGE_SIZE_TEN);
-        for (User user :dataList) {
-            List<Customer> customerList = customerService.listByForeignKey(String.valueOf(user.getId()));
-            user.setCustomerList(customerList);
-        }
         /**构建pagination*/
         Pagination<User> pagination = new Pagination<>(totalRecords, Integer.valueOf(currentPage), PaginationPropertyConst.PAGE_SIZE_TEN, dataList);
         return pagination;

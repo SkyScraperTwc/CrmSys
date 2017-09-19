@@ -1,11 +1,14 @@
 package com.scut.crm.dao.po;
 
-import lombok.Data;
+import lombok.*;
 
 import java.math.BigDecimal;
 import java.util.Date;
 
-@Data
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Contract {
     /**
      * id
@@ -28,13 +31,9 @@ public class Contract {
      */
     private BigDecimal money;
     /**
-     * 客户ID
+     * 客户
      */
-    private String customerId;
-    /**
-     * 客户名称
-     */
-    private String customerName;
+    private Customer customer;
     /**
      * 创建时间
      */
@@ -44,4 +43,17 @@ public class Contract {
      */
     private Date editTime;
 
+    @Override
+    public String toString() {
+        return "Contract{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", type='" + type + '\'' +
+                ", state='" + state + '\'' +
+                ", money=" + money +
+                ", customerId=" + customer.getId() +
+                ", createTime=" + createTime +
+                ", editTime=" + editTime +
+                '}';
+    }
 }

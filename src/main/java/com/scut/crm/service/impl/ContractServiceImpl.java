@@ -5,7 +5,7 @@ import com.scut.crm.dao.impl.BaseDaoImpl;
 import com.scut.crm.dao.po.Contract;
 import com.scut.crm.entity.Pagination;
 import com.scut.crm.service.AbstractBaseService;
-import org.apache.log4j.Logger;
+import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,16 +14,15 @@ import java.util.List;
 import java.util.Map;
 
 @Service
+@Log4j
 public class ContractServiceImpl extends AbstractBaseService<Contract>{
-
-    private Logger logger = Logger.getLogger(ContractServiceImpl.class);
 
     @Autowired
     private BaseDaoImpl baseDao;
 
     @Override
     public Pagination<Contract> listByPage(Map<String, Object> map) {
-        logger.info("map---"+map);
+        log.info("map---"+map);
         String hql = "select contract from Contract contract where 1=1";
         StringBuffer joint = new StringBuffer("");
 
@@ -34,7 +33,8 @@ public class ContractServiceImpl extends AbstractBaseService<Contract>{
         }
         /**获取totalRecords*/
         int totalRecords = this.getTotalRecords(joint.toString(), null);
-        /**查询contractList*/
+
+        /**查询contractSet*/
         List<Contract> dataList = baseDao.queryByPage(hql, null, Integer.valueOf(currentPage), PaginationPropertyConst.PAGE_SIZE_TEN);
 
         /**构建pagination*/
@@ -44,9 +44,9 @@ public class ContractServiceImpl extends AbstractBaseService<Contract>{
 
     @Override
     public List<Contract> listByForeignKey(String id) {
-        String hql = "select contract from Contract contract where contract.customerId=?";
+        String hql = "select contract from Contract contract where contract.customer.id=?";
         List<Object> paramList = new ArrayList<>();
-        paramList.add(id);
+        paramList.add(Integer.valueOf(id));
         return baseDao.queryList(hql, paramList.toArray());
     }
 
@@ -55,8 +55,8 @@ public class ContractServiceImpl extends AbstractBaseService<Contract>{
         String hql = "select count(*) from Contract contract where 1=1";
         hql = hql + joint;
         int totalRecords = baseDao.count(hql, params);
-        logger.info("getTotalRecords----hql---"+hql);
-        logger.info("getTotalRecords----totalRecords----"+totalRecords);
+        log.info("getTotalRecords----hql---"+hql);
+        log.info("getTotalRecords----totalRecords----"+totalRecords);
         return totalRecords;
     }
 
@@ -64,4 +64,5 @@ public class ContractServiceImpl extends AbstractBaseService<Contract>{
     public Contract getById(Integer id) {
         return (Contract) baseDao.get(Contract.class, id);
     }
+
 }

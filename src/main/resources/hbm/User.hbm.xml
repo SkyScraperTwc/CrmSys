@@ -33,6 +33,11 @@
         <property name="editTime" type="date">
             <column name="editTime" />
         </property>
-        
+
+        <set name="customerSet" table="customer" inverse="true" lazy="false">
+            <key column="userId"/>
+            <one-to-many class="com.scut.crm.dao.po.Customer"/>
+        </set>
+
     </class>
 </hibernate-mapping>

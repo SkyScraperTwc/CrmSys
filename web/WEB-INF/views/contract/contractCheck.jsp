@@ -35,7 +35,7 @@
 									<td>${contract.type}</td>
 									<td>${contract.state}</td>
 									<td>${contract.money}</td>
-									<td>${contract.customerName}</td>
+									<td>${contract.customer.name}</td>
 									<td>${contract.editTime}</td>
 									<td>
 										<a href="javascript:void(0);"  onclick="editContract(${contract.id})" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#ContractEditDialog">修改</a>

@@ -50,10 +50,6 @@
             <column name="opportunity" />
         </property>
 
-        <property name="userId" type="string">
-            <column name="userId" />
-        </property>
-
         <property name="createTime" type="date">
             <column name="createTime" />
         </property>
@@ -61,6 +57,12 @@
         <property name="editTime" type="date">
             <column name="editTime" />
         </property>
-        
+
+        <many-to-one name="user" class="com.scut.crm.dao.po.User" column="userId" lazy="false"/>
+
+        <set name="contractSet" table="contract" inverse="true" lazy="false">
+            <key column="customerId"/>
+            <one-to-many class="com.scut.crm.dao.po.Contract"/>
+        </set>
     </class>
 </hibernate-mapping>
