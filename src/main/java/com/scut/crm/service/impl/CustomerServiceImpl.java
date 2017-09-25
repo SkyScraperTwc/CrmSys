@@ -2,14 +2,12 @@ package com.scut.crm.service.impl;
 
 import com.scut.crm.constant.PaginationPropertyConst;
 import com.scut.crm.dao.impl.BaseDaoImpl;
-import com.scut.crm.dao.po.Contract;
-import com.scut.crm.dao.po.Customer;
+import com.scut.crm.entity.Customer;
 import com.scut.crm.entity.Pagination;
-import com.scut.crm.dao.po.User;
+import com.scut.crm.entity.User;
 import com.scut.crm.service.AbstractBaseService;
 import com.scut.crm.utils.ScopeUtils;
 import lombok.extern.log4j.Log4j;
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -88,11 +86,8 @@ public class CustomerServiceImpl extends AbstractBaseService<Customer> {
 	}
 
 	@Override
-	public List<Customer> listByForeignKey(String id) {
-		String hql = "select customer from Customer customer where customer.user.id=?";
-		List<Object> paramList = new ArrayList<>();
-		paramList.add(id);
-		return baseDao.queryList(hql,paramList.toArray());
+	public Pagination<Customer> listByForeignKey(Map<String,Object> map) {
+		return null;
 	}
 
 
@@ -110,4 +105,5 @@ public class CustomerServiceImpl extends AbstractBaseService<Customer> {
 	public Customer getById(Integer id) {
 		return (Customer) baseDao.get(Customer.class, id);
 	}
+
 }

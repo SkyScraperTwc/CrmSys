@@ -17,7 +17,8 @@
 				<table class="table table-bordered table-striped">
 					<thead>
 						<tr>
-							<th>ID</th>
+							<th>序号</th>
+							<th>编号</th>
 							<th>用户名称</th>
 							<th>性别</th>
 							<th>手机</th>
@@ -29,7 +30,8 @@
 					<tbody>
 						<c:forEach items="${pagination.dataList}" var="user" varStatus="stat">
 							<tr>
-								<td>${stat.count}</td>
+								<td>${(pagination.currentPage-1)*pagination.pageSize+stat.count}</td>
+								<td>${user.serialNumber}</td>
 								<td>${user.username}</td>
 								<td>${user.sex}</td>
 								<td>${user.phone}</td>

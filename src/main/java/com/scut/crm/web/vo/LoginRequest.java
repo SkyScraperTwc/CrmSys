@@ -3,7 +3,7 @@ package com.scut.crm.web.vo;
 import lombok.Data;
 
 @Data
-public class loginRequest {
+public class LoginRequest {
 
     private String username;
 

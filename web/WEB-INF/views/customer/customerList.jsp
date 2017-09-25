@@ -47,7 +47,9 @@
 	</div>
 </div>
 
-<button class="btn btn-default" onclick="addCustomer()">添加客户</button>
+<button class="btn btn-default" onclick="addCustomerJs()">添加客户</button>
+<%@include file="customerAdd.jsp"%>
+<%@include file="customerEdit.jsp"%>
 
 <div class="row" id="customerList">
 	<div class="col-lg-12">
@@ -56,7 +58,8 @@
 				<table class="table table-bordered table-striped">
 					<thead>
 						<tr>
-							<th>ID</th>
+							<th>序号</th>
+							<th>编号</th>
 							<th>客户名称</th>
 							<th>客户来源</th>
 							<th>客户行业</th>
@@ -65,7 +68,6 @@
 							<th>公司性质</th>
 							<th>商机状态</th>
 							<th>手机</th>
-							<th>合同数量</th>
 							<th>修改时间</th>
 							<th>操作</th>
 						</tr>
@@ -74,6 +76,7 @@
 						<c:forEach items="${pagination.dataList}" var="customer" varStatus="stat">
 							<tr>
 								<td>${(pagination.currentPage-1)*pagination.pageSize+stat.count}</td>
+								<td>${customer.serialNumber}</td>
 								<td>${customer.name}</td>
 								<td>${customer.source}</td>
 								<td>${customer.industry}</td>
@@ -82,7 +85,6 @@
 								<td>${customer.nature}</td>
 								<td>${customer.opportunity}</td>
 								<td>${customer.phone}</td>
-								<td>${fn:length(customer.contractSet)}</td>
 								<td>${customer.editTime}</td>
 								<td>
 									<a href="javascript:void(0);"  onclick="editCustomer(${customer.id})" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#customerEditDialog">修改</a>
@@ -108,17 +110,14 @@
 	</div>
 </div>
 
-<%@include file="customerAdd.jsp"%>
-<%@include file="customerEdit.jsp"%>
-
 <script type="text/javascript">
 
-    function addCustomer(){
-        $("#customerList").hide();
+    function addCustomerJs(){
         $("#addCustomer").show();
+        $("#customerList").hide();
     }
 
-    function backSubmit(){
+    function backSubmitJs(){
         $("#customerList").show();
         $("#addCustomer").hide();
     }
@@ -190,5 +189,4 @@
 			});
         }
     }
-
 </script>

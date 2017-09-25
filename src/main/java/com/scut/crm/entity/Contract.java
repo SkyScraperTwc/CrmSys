@@ -1,4 +1,4 @@
-package com.scut.crm.dao.po;
+package com.scut.crm.entity;
 
 import lombok.*;
 
@@ -14,6 +14,10 @@ public class Contract {
      * id
      */
     private Integer id;
+    /**
+     * 编号
+     */
+    private String serialNumber;
     /**
      * 合同名字
      */
@@ -42,6 +46,10 @@ public class Contract {
      * 修改时间
      */
     private Date editTime;
+
+    public Contract(Integer id){
+        this.id = id;
+    }
 
     @Override
     public String toString() {

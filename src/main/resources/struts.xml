@@ -6,6 +6,7 @@
 <struts>
 	<!--以action结尾的后缀才可以访问 -->
 	<constant name="struts.action.extension" value="action"/>
+	<include file="struts2/authority.xml"/>
 	<include file="struts2/user.xml"/>
 	<include file="struts2/customer.xml"/>
 	<include file="struts2/contract.xml"/>

@@ -99,7 +99,7 @@
 			</div>
 			<div class="form-group">
 				<button class="btn btn-default" onclick="addSubmit()">添加</button>
-				<button class="btn btn-default" onclick="backSubmit()">返回</button>
+				<button class="btn btn-default" onclick="backSubmitJs()">返回</button>
 			</div>
 		</form>
 	</div>

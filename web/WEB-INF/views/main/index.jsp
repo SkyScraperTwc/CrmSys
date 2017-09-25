@@ -35,8 +35,6 @@
 <script src="<%=basePath%>js/jquery.dataTables.min.js"></script>
 <script src="<%=basePath%>js/dataTables.bootstrap.min.js"></script>
 <script src="<%=basePath%>js/sb-admin-2.js"></script>
-
-
 </head>
 
 <body>
@@ -49,6 +47,7 @@
 				class="icon-bar"></span>
 		</button>
 		<a class="navbar-brand" href="#">BOOT企业信息管理后台 v1.0 &nbsp&nbsp&nbsp欢迎您：${sessionScope.user.username}</a>
+		<a class="navbar-brand" href="<%=basePath%>authorityAction/logout.action" >注销</a>
 	</div>
 	<div class="navbar-default sidebar" role="navigation">
 		<div class="sidebar-nav navbar-collapse">

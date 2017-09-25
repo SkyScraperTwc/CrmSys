@@ -2,11 +2,11 @@ package com.scut.crm.service.impl;
 
 import com.scut.crm.constant.PaginationPropertyConst;
 import com.scut.crm.dao.impl.BaseDaoImpl;
-import com.scut.crm.dao.po.Customer;
-import com.scut.crm.dao.po.User;
+import com.scut.crm.entity.User;
 import com.scut.crm.entity.Pagination;
 import com.scut.crm.service.AbstractBaseService;
 import com.scut.crm.utils.ScopeUtils;
+import lombok.extern.log4j.Log4j;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,30 +16,15 @@ import java.util.List;
 import java.util.Map;
 
 @Service
+@Log4j
 public class UserServiceImpl extends AbstractBaseService<User>{
-
-    private Logger logger = Logger.getLogger(UserServiceImpl.class);
 
     @Autowired
     private BaseDaoImpl baseDao;
 
-    public boolean login(String username, String password) {
-        String hql = "select user from User user where user.username=?";
-        Object[] param = {username};
-        User user = (User) baseDao.queryOne(hql, param);
-        if (null!=user && user.getPassword().equals(password)){
-            HttpSession session = ScopeUtils.getHttpSession();
-            session.setAttribute("user", user);
-            session.setMaxInactiveInterval(-1);
-            return true;
-        }else {
-            return false;
-        }
-    }
-
     @Override
     public Pagination<User> listByPage(Map<String, Object> map) {
-        logger.info("map---"+map);
+        log.info("map---"+map);
         String hql = "select user from User user where 1=1";
         StringBuffer joint = new StringBuffer("");
 
@@ -58,7 +43,7 @@ public class UserServiceImpl extends AbstractBaseService<User>{
     }
 
     @Override
-    public List<User> listByForeignKey(String id) {
+    public Pagination<User> listByForeignKey(Map<String,Object> map) {
         return null;
     }
 
@@ -67,8 +52,8 @@ public class UserServiceImpl extends AbstractBaseService<User>{
         String hql = "select count(*) from User user where 1=1";
         hql = hql + joint;
         int totalRecords = baseDao.count(hql, params);
-        logger.info("getTotalRecords----hql---"+hql);
-        logger.info("getTotalRecords----totalRecords----"+totalRecords);
+        log.info("getTotalRecords----hql---"+hql);
+        log.info("getTotalRecords----totalRecords----"+totalRecords);
         return totalRecords;
     }
 

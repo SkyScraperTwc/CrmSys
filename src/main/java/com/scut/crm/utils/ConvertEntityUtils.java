@@ -1,8 +1,10 @@
 package com.scut.crm.utils;
 
 import com.scut.crm.constant.PropertyMapConst;
-import com.scut.crm.dao.po.Customer;
-import com.scut.crm.dao.po.User;
+import com.scut.crm.entity.Contract;
+import com.scut.crm.entity.Customer;
+import com.scut.crm.entity.User;
+import com.scut.crm.web.vo.ContractSaveRequest;
 import com.scut.crm.web.vo.CustomerQueryRequest;
 import com.scut.crm.web.vo.CustomerSaveRequest;
 import com.scut.crm.web.vo.CustomerUpdateRequest;
@@ -26,10 +28,11 @@ public final class ConvertEntityUtils {
      * @throws InvocationTargetException
      * @throws IllegalAccessException
      */
-    public static Customer fromSaveRequest2Customer(CustomerSaveRequest saveRequest) throws InvocationTargetException, IllegalAccessException {
+    public static Customer fromSaveRequest2Customer(CustomerSaveRequest saveRequest, String serialNumber, User user) throws InvocationTargetException, IllegalAccessException {
         Customer customer = new Customer();
         BeanUtils.setProperty(customer,"id",null);
         BeanUtils.setProperty(customer,"name",saveRequest.getCust_name());
+        BeanUtils.setProperty(customer,"serialNumber", serialNumber);
         BeanUtils.setProperty(customer,"zipcode",saveRequest.getCust_zipcode());
         BeanUtils.setProperty(customer,"phone",saveRequest.getCust_phone());
         BeanUtils.setProperty(customer,"address",saveRequest.getCust_address());
@@ -40,9 +43,8 @@ public final class ConvertEntityUtils {
         BeanUtils.setProperty(customer,"annualTurnover", MapUtils.getValue(getUnmodifiableMap(PropertyMapConst.CUSTOMER_ANNUALTURNOVER_MAP),saveRequest.getCust_annualTurnover()));
         BeanUtils.setProperty(customer,"nature", MapUtils.getValue(getUnmodifiableMap(PropertyMapConst.CUSTOMER_NATURE_MAP),saveRequest.getCust_nature()));
         BeanUtils.setProperty(customer,"opportunity", MapUtils.getValue(getUnmodifiableMap(PropertyMapConst.CUSTOMER_OPPORTUNITY_MAP),saveRequest.getCust_opportunity()));
-        BeanUtils.setProperty(customer,"contractList",null);
-        User user = (User) ScopeUtils.getSessionMap().get("user");
-        BeanUtils.setProperty(customer,"userId",user.getId());
+        BeanUtils.setProperty(customer,"contractSet",null);
+        BeanUtils.setProperty(customer,"user",user);
         BeanUtils.setProperty(customer,"createTime",new Date());
         BeanUtils.setProperty(customer,"editTime",new Date());
         return customer;
@@ -123,6 +125,16 @@ public final class ConvertEntityUtils {
         BeanUtils.setProperty(customer,"createTime",new Date());
         BeanUtils.setProperty(customer,"editTime",new Date());
         return customer;
+    }
+
+    public static Contract fromSaveRequest2Contract(ContractSaveRequest saveRequest) throws InvocationTargetException, IllegalAccessException {
+        Contract contract = new Contract();
+        BeanUtils.setProperty(contract,"name",saveRequest.getCont_name());
+        BeanUtils.setProperty(contract,"type",MapUtils.getKeyByValue(getUnmodifiableMap(PropertyMapConst.CONTRACT_TYPE_MAP),saveRequest.getCont_type()));
+        BeanUtils.setProperty(contract,"state",MapUtils.getKeyByValue(getUnmodifiableMap(PropertyMapConst.CONTRACT_STATE_MAP),saveRequest.getCont_state()));
+        BeanUtils.setProperty(contract,"money",saveRequest.getCont_money());
+        BeanUtils.setProperty(contract,"money",saveRequest.getCont_money());
+        return null;
     }
 
     /**

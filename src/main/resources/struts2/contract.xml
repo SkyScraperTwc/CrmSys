@@ -15,6 +15,10 @@
 				/WEB-INF/views/contract/contractList.jsp
 			</result>
 
+			<result name="delete_success" type="json">
+				<param name="root">deleteJson</param>
+			</result>
+
 			<interceptor-ref name="loginInterceptorStack"/>
 		</action>
 	</package>

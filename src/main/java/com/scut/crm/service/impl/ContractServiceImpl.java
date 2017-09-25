@@ -2,7 +2,7 @@ package com.scut.crm.service.impl;
 
 import com.scut.crm.constant.PaginationPropertyConst;
 import com.scut.crm.dao.impl.BaseDaoImpl;
-import com.scut.crm.dao.po.Contract;
+import com.scut.crm.entity.Contract;
 import com.scut.crm.entity.Pagination;
 import com.scut.crm.service.AbstractBaseService;
 import lombok.extern.log4j.Log4j;
@@ -22,7 +22,6 @@ public class ContractServiceImpl extends AbstractBaseService<Contract>{
 
     @Override
     public Pagination<Contract> listByPage(Map<String, Object> map) {
-        log.info("map---"+map);
         String hql = "select contract from Contract contract where 1=1";
         StringBuffer joint = new StringBuffer("");
 
@@ -43,11 +42,28 @@ public class ContractServiceImpl extends AbstractBaseService<Contract>{
     }
 
     @Override
-    public List<Contract> listByForeignKey(String id) {
-        String hql = "select contract from Contract contract where contract.customer.id=?";
+    public Pagination<Contract> listByForeignKey(Map<String,Object> map) {
+        String hql = "select contract from Contract contract where 1=1";
         List<Object> paramList = new ArrayList<>();
-        paramList.add(Integer.valueOf(id));
-        return baseDao.queryList(hql, paramList.toArray());
+
+        StringBuffer joint = new StringBuffer("");
+        String currentPage = (String) map.get("currentPage");
+        String customerId = (String) map.get("customerId");
+        if(null==currentPage || currentPage.isEmpty()){
+            /**currentPage=1*/
+            currentPage = String.valueOf(PaginationPropertyConst.PAGE_CURRENT_ONE);
+        }
+        if(null!=customerId && !customerId.isEmpty()){
+            joint.append(" and contract.customer.id=?");
+            paramList.add(customerId);
+        }
+
+        int totalRecords = this.getTotalRecords(joint.toString(), paramList.toArray());
+
+        List<Contract> dataList = baseDao.queryByPage(hql, paramList.toArray(), Integer.valueOf(currentPage), PaginationPropertyConst.PAGE_SIZE_TEN);
+
+        Pagination<Contract> pagination = new Pagination<>(totalRecords, Integer.valueOf(currentPage), PaginationPropertyConst.PAGE_SIZE_TEN, dataList);
+        return pagination;
     }
 
     @Override

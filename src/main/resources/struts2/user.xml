@@ -7,14 +7,6 @@
 	<package name="user_package" namespace="/userAction" extends="json-default,interceptor" strict-method-invocation="false">
 
 		<action name="*" class="userAction" method="{1}">
-			<result name="login_success" type="redirect">
-				/customerAction/list.action
-			</result>
-
-			<result name="toLogin">
-				/WEB-INF/views/main/login.jsp
-			</result>
-
 			<result name="user_index">
 				/WEB-INF/views/user/userList.jsp
 			</result>

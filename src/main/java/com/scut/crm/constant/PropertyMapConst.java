@@ -20,6 +20,11 @@ public final class PropertyMapConst {
     /**商机状态*/
     public final static Map<String,Object> CUSTOMER_OPPORTUNITY_MAP = new HashMap();
 
+    /**合同类型*/
+    public final static Map<String,Object> CONTRACT_TYPE_MAP = new HashMap();
+    /**合同状态*/
+    public final static Map<String,Object> CONTRACT_STATE_MAP = new HashMap();
+
     /**静态代码块*/
     static {
         CUSTOMER_LEVEL_MAP.put(EntityPropertyConst.ONE, "普通客户");
@@ -57,5 +62,16 @@ public final class PropertyMapConst {
         CUSTOMER_OPPORTUNITY_MAP.put(EntityPropertyConst.TWO, "初步沟通");
         CUSTOMER_OPPORTUNITY_MAP.put(EntityPropertyConst.THREE, "深度沟通");
         CUSTOMER_OPPORTUNITY_MAP.put(EntityPropertyConst.FOUR, "签订合同");
+    }
+
+    static {
+        CONTRACT_TYPE_MAP.put(EntityPropertyConst.ONE,"买卖合同");
+        CONTRACT_TYPE_MAP.put(EntityPropertyConst.TWO,"租赁合同");
+        CONTRACT_TYPE_MAP.put(EntityPropertyConst.THREE,"承揽合同");
+        CONTRACT_TYPE_MAP.put(EntityPropertyConst.FOUR,"技术合同");
+
+        CONTRACT_STATE_MAP.put(EntityPropertyConst.ONE,"执行中");
+        CONTRACT_STATE_MAP.put(EntityPropertyConst.TWO,"结束");
+        CONTRACT_STATE_MAP.put(EntityPropertyConst.THREE,"意外中止");
     }
 }

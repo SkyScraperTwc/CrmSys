@@ -8,11 +8,13 @@ import java.util.Map;
 public interface IBaseService<T> {
 	Pagination<T> listByPage(Map<String,Object> map);
 
-	List<T> listByForeignKey(String id);
+	Pagination<T> listByForeignKey(Map<String,Object> map);
 
 	int getTotalRecords(String joint, Object[] params);
 
 	T getById(Integer id);
+
+	boolean judgeIdentifier(String serialNumber);
 
 	void update(T object);
 

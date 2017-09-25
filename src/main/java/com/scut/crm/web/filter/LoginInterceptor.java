@@ -3,7 +3,7 @@ package com.scut.crm.web.filter;
 import com.opensymphony.xwork2.ActionInvocation;
 import com.opensymphony.xwork2.interceptor.Interceptor;
 import com.scut.crm.constant.PageReturnConst;
-import com.scut.crm.dao.po.User;
+import com.scut.crm.entity.User;
 import com.scut.crm.utils.ScopeUtils;
 
 import java.util.Map;
@@ -19,7 +19,7 @@ public class LoginInterceptor implements Interceptor {
 
 	@Override
 	public void init() {
-		this.urls = new String[]{"/userAction/login.action", "/userAction/toLogin.action"};
+		this.urls = new String[]{"/authorityAction/login.action", "/authorityAction/toLogin.action"};
 	}
 
 	@Override

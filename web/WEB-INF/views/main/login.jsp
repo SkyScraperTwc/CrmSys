@@ -6,7 +6,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 %>
 <!DOCTYPE html>
 <html lang="cn">
-<!-- BEGIN HEAD -->
 <head>
 	<meta charset="utf-8" />
 	<title>login.jsp</title>
@@ -32,14 +31,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<button data-dismiss="modal" class="btn green">取消</button>
 			</div>
 		</div>
-		<form class="form-vertical login-form" action="/CrmSys/userAction/login.action" method="post" >
+		<form class="form-vertical login-form" action="<%=basePath%>authorityAction/login.action" method="post" >
 			<h3 class="form-title" style="text-align: center;">企业信息管理系统登录</h3>
 			<div class="alert alert-error hide">
 				<button class="close" data-dismiss="alert"></button>
 				<span>请输入您的用户名和密码.</span>
 			</div>
 			<div class="control-group">
-				<!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
 				<label class="control-label visible-ie8 visible-ie9">用户名</label>
 				<div class="controls">
 					<div class="input-icon left">

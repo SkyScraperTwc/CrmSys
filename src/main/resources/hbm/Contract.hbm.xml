@@ -3,13 +3,17 @@
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping>
-    <class name="com.scut.crm.dao.po.Contract" table="contract">
+    <class name="com.scut.crm.entity.Contract" table="contract">
     
         <id name="id" type="integer">
             <column name="id" />
             <generator class="native" />
-        </id> 
-         
+        </id>
+
+        <property name="serialNumber" type="string">
+            <column name="serialnumber" />
+        </property>
+
         <property name="name" type="string">
             <column name="name" />
         </property>
@@ -34,6 +38,6 @@
             <column name="editTime" />
         </property>
 
-        <many-to-one name="customer" class="com.scut.crm.dao.po.Customer" column="customerId" lazy="false"/>
+        <many-to-one name="customer" class="com.scut.crm.entity.Customer" column="customerId" lazy="false"/>
     </class>
 </hibernate-mapping>
