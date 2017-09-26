@@ -14,8 +14,8 @@ public class JunitTest {
 
     @Test
     public void test1(){
-        Map<String,Object> map = new HashMap();
-        System.out.println(map.get(""));
+        UUID uuid = UUID.randomUUID();
+        System.out.println(uuid);
     }
 
     @Test

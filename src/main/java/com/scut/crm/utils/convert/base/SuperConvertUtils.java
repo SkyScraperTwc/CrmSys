@@ -1,12 +1,18 @@
-package com.scut.crm.utils;
+package com.scut.crm.utils.convert.base;
 
+import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
 
-/**
- * Map操作工具类
- */
-public final class MapUtils {
+public class SuperConvertUtils {
+    /**
+     * getUnmodifiableMap
+     * @param map
+     * @return
+     */
+    public static Map<String,Object> getUnmodifiableMap(Map<String,Object> map){
+        return Collections.unmodifiableMap(map);
+    }
 
     public static String getKeyByValue(Map<String,Object> map, String value){
         Set<String> kSet = map.keySet();

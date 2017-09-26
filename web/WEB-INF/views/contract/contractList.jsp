@@ -90,23 +90,10 @@
         });
     }
 
-    function checkContract(opportunity, id){
-		if(opportunity!="签订合同"){
-			alert("此客户没有签订合同！");
-		}else{
-            $.post(
-                "<%=basePath%>contractAction/check.action",
-                {"ContractId":id},
-                function(data){
-                    return true;
-			});
-		}
-	}
-
     function editContract(id) {
         $.ajax({
             type:"post",
-            url:"<%=basePath%>ContractAction/detail.action",
+            url:"<%=basePath%>contractAction/detail.action",
             data:{"ContractId":id},
             success:function(data) {
                 var obj = JSON.parse(data);
@@ -127,7 +114,7 @@
 
     function updateContract() {
         $.post(
-            "<%=basePath%>ContractAction/update.action",
+            "<%=basePath%>contractAction/update.action",
             $("#edit_Contract_form").serialize(),
             function(data){
                 if(data=="update_success"){

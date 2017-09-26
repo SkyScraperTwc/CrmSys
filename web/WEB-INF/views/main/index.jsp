@@ -74,7 +74,7 @@
 				</li>
 				<li>
 					<a href="<%=basePath%>contractAction/list.action" class="active">
-						<i class="fa fa-file fa-fw"></i> 合同管理
+						<i class="fa fa-facebook fa-fw"></i> 合同管理
 					</a>
 				</li>
 			</ul>

@@ -84,6 +84,7 @@ public class Customer {
 		return "Customer{" +
 				"id=" + id +
 				", name='" + name + '\'' +
+				", serialNumber='" + serialNumber + '\'' +
 				", zipcode='" + zipcode + '\'' +
 				", phone='" + phone + '\'' +
 				", address='" + address + '\'' +

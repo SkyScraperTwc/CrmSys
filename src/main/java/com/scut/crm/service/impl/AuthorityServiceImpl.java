@@ -1,5 +1,6 @@
 package com.scut.crm.service.impl;
 
+import com.scut.crm.constant.EntityNumberConst;
 import com.scut.crm.dao.impl.BaseDaoImpl;
 import com.scut.crm.entity.User;
 import com.scut.crm.utils.ScopeUtils;
@@ -20,7 +21,7 @@ public class AuthorityServiceImpl {
         if (null!=user && user.getPassword().equals(password)){
             HttpSession session = ScopeUtils.getHttpSession();
             session.setAttribute("user", user);
-            session.setMaxInactiveInterval(-1);
+            session.setMaxInactiveInterval(EntityNumberConst.NEGATIVE_ONE);
             return true;
         }else {
             return false;

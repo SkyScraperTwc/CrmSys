@@ -516,7 +516,7 @@ Licensed under the MIT license.
                     position: "bottom", // or "top"
                     mode: null, // null or "time"
                     font: null, // null (derived from CSS in placeholder) or object like { size: 11, lineHeight: 13, style: "italic", weight: "bold", family: "sans-serif", variant: "small-caps" }
-                    color: null, // base color, labels, ticks
+                    color: null, // convert color, labels, ticks
                     tickColor: null, // possibly different color of ticks, e.g. "rgba(0,0,0,0.15)"
                     transform: null, // null or f: number -> number to transform axis
                     inverseTransform: null, // if transform is set, this should be the inverse function
@@ -1253,12 +1253,12 @@ Licensed under the MIT license.
             // from a previous plot in this container that we'll try to re-use.
 
             placeholder.css("padding", 0) // padding messes up the positioning
-                .children(":not(.flot-base,.flot-overlay)").remove();
+                .children(":not(.flot-convert,.flot-overlay)").remove();
 
             if (placeholder.css("position") == 'static')
                 placeholder.css("position", "relative"); // for positioning labels and overlay
 
-            surface = new Canvas("flot-base", placeholder);
+            surface = new Canvas("flot-convert", placeholder);
             overlay = new Canvas("flot-overlay", placeholder); // overlay canvas for interactive features
 
             ctx = surface.context;
@@ -1662,7 +1662,7 @@ Licensed under the MIT license.
                 throw new Error("Time mode requires the flot.time plugin.");
             }
 
-            // Flot supports base-10 axes; any other mode else is handled by a plug-in,
+            // Flot supports convert-10 axes; any other mode else is handled by a plug-in,
             // like flot.time.js.
 
             if (!axis.tickGenerator) {
@@ -3053,7 +3053,7 @@ Licensed under the MIT license.
         });
     };
 
-    // round to nearby lower multiple of base
+    // round to nearby lower multiple of convert
     function floorInBase(n, base) {
         return base * Math.floor(n / base);
     }

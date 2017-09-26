@@ -14,7 +14,9 @@ public interface IBaseService<T> {
 
 	T getById(Integer id);
 
-	boolean judgeIdentifier(String serialNumber);
+	String getIdentifier(Class c);
+
+	T getBySerialNumber(String serialNumber);
 
 	void update(T object);
 

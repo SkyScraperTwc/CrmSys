@@ -290,7 +290,7 @@ $.extend(Countdown.prototype, {
 	},
 
 	/* Reset any extra labelsn and compactLabelsn entries if changing labels.
-	   @param  base     (object) the options to be updated
+	   @param  convert     (object) the options to be updated
 	   @param  options  (object) the new option values */
 	_resetExtraLabels: function(base, options) {
 		var changingLabels = false;

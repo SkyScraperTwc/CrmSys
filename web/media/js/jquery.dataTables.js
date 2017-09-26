@@ -4303,7 +4303,7 @@
 				}
 				else
 				{
-					/* No sorting on this column, so add the base class. This will have been assigned by
+					/* No sorting on this column, so add the convert class. This will have been assigned by
 					 * _fnAddColumn
 					 */
 					$(oSettings.aoColumns[i].nTh).addClass( oSettings.aoColumns[i].sSortingClass );
@@ -4475,7 +4475,7 @@
 		 *  @param {string} sName name of the cookie to create
 		 *  @param {string} sValue the value the cookie should take
 		 *  @param {int} iSecs duration of the cookie
-		 *  @param {string} sBaseName sName is made up of the base + file name - this is the base
+		 *  @param {string} sBaseName sName is made up of the convert + file name - this is the convert
 		 *  @param {function} fnCallback User definable function to modify the cookie
 		 *  @memberof DataTable#oApi
 		 */

@@ -1,4 +1,4 @@
-package com.scut.crm.web.vo;
+package com.scut.crm.web.vo.save;
 
 import lombok.Data;
 

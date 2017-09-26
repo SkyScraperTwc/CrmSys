@@ -1,6 +1,8 @@
 package com.scut.crm.constant;
 
-public final class EntityPropertyConst {
+public final class EntityNumberConst {
+
+    public final static int NEGATIVE_ONE = -1;
 
     public final static String ONE = "1";
 

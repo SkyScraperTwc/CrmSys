@@ -7,6 +7,8 @@ public class CustomerUpdateRequest {
 
     private Integer cust_id;
 
+    private String cust_serialNumber;
+
     private String cust_name;
 
     private String cust_phone;

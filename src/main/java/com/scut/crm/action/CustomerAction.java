@@ -6,11 +6,10 @@ import com.scut.crm.entity.Customer;
 import com.scut.crm.entity.Pagination;
 import com.scut.crm.entity.User;
 import com.scut.crm.service.impl.CustomerServiceImpl;
-import com.scut.crm.utils.ConvertEntityUtils;
-import com.scut.crm.utils.IdentifierUtils;
+import com.scut.crm.utils.convert.CustomerConvertUtils;
 import com.scut.crm.utils.ScopeUtils;
 import com.scut.crm.web.vo.CustomerQueryRequest;
-import com.scut.crm.web.vo.CustomerSaveRequest;
+import com.scut.crm.web.vo.save.CustomerSaveRequest;
 import com.scut.crm.web.vo.CustomerUpdateRequest;
 import lombok.Data;
 import lombok.extern.log4j.Log4j;
@@ -27,10 +26,6 @@ import java.util.Map;
 @Log4j
 public class CustomerAction {
 
-	private CustomerQueryRequest queryRequest;
-
-	private CustomerSaveRequest saveRequest;
-
 	private String customerId;
 
 	private String detailJson;
@@ -38,6 +33,10 @@ public class CustomerAction {
 	private String deleteJson;
 
 	private String updateJson;
+
+	private CustomerQueryRequest queryRequest;
+
+	private CustomerSaveRequest saveRequest;
 
 	private CustomerUpdateRequest updateRequest;
 
@@ -52,10 +51,9 @@ public class CustomerAction {
 	 */
 	public String list() throws InvocationTargetException, IllegalAccessException {
 		/**queryRequest转换成customer*/
-		Map<String,Object> map = ConvertEntityUtils.fromQueryRequest2Customer(queryRequest);
+		Map<String,Object> map = CustomerConvertUtils.fromQueryRequest2Customer(queryRequest);
 		Pagination<Customer> pagination = customerService.listByPage(map);
 		ScopeUtils.getRequestMap().put("pagination",pagination);
-		/**返回到主页面*/
 		return PageReturnConst.CUST_INDEX;
 	}
 
@@ -66,17 +64,11 @@ public class CustomerAction {
 	 * @throws IllegalAccessException
 	 */
 	public String add() throws InvocationTargetException, IllegalAccessException {
-		boolean flag = true;
-		String serialNumber = "";
-		do {
-			serialNumber = IdentifierUtils.getSerialNumber(Customer.class);
-			flag = customerService.judgeIdentifier(serialNumber);
-		}while (!flag);
+		String serialNumber = customerService.getIdentifier(Customer.class);
 		User user = (User) ScopeUtils.getSessionMap().get("user");
 		/**saveRequest转换成customer*/
-		Customer customer = ConvertEntityUtils.fromSaveRequest2Customer(saveRequest,serialNumber,user);
+		Customer customer = CustomerConvertUtils.fromSaveRequest2Customer(saveRequest, serialNumber, user);
 		customerService.save(customer);
-		/**返回到主页面*/
 		return PageReturnConst.ADD_SUCCESS;
 	}
 
@@ -95,7 +87,8 @@ public class CustomerAction {
 	 * @return
 	 */
 	public String update() throws InvocationTargetException, IllegalAccessException {
-		Customer customer = ConvertEntityUtils.fromUpdateRequest2Customer(updateRequest);
+		User user = (User) ScopeUtils.getSessionMap().get("user");
+		Customer customer = CustomerConvertUtils.fromUpdateRequest2Customer(updateRequest, user);
 		customerService.update(customer);
 		updateJson = PageReturnConst.UPDATE_SUCCESS;
 		return updateJson;
@@ -107,7 +100,7 @@ public class CustomerAction {
 	 */
 	public String detail() throws InvocationTargetException, IllegalAccessException {
 		Customer customer = customerService.getById(Integer.valueOf(customerId));
-		CustomerUpdateRequest updateRequest = ConvertEntityUtils.fromCustomer2UpdateRequest(customer);
+		CustomerUpdateRequest updateRequest = CustomerConvertUtils.fromCustomer2UpdateRequest(customer);
 		/**转换为json格式*/
 		detailJson = JSON.toJSONString(updateRequest);
 		return PageReturnConst.DETAIL_SUCCESS;

@@ -4,14 +4,14 @@
 	"http://struts.apache.org/dtds/struts-2.3.dtd">
  
 <struts>
-	<package name="customer_package" namespace="/customerAction" extends="json-default,interceptor" strict-method-invocation="false">
+	<package name="customer_package" namespace="/customerAction" extends="json-default,interceptor_package" strict-method-invocation="false">
 		<action name="*" class="customerAction" method="{1}">
-			<result name="cust_index">
-				/WEB-INF/views/customer/customerList.jsp
-			</result>
-
 			<result name="toLogin">
 				/WEB-INF/views/main/login.jsp
+			</result>
+
+			<result name="cust_index">
+				/WEB-INF/views/customer/customerList.jsp
 			</result>
 
 			<result name="add_success" type="redirect">
@@ -30,7 +30,7 @@
 				<param name="root">updateJson</param>
 			</result>
 
-			<interceptor-ref name="loginInterceptorStack"/>
+			<interceptor-ref name="myInterceptorStack"/>
 		</action>
 	</package>
 </struts> 

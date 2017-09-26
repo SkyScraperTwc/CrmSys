@@ -2,10 +2,13 @@ package com.scut.crm.action;
 
 import com.scut.crm.constant.PageReturnConst;
 import com.scut.crm.entity.Contract;
+import com.scut.crm.entity.Customer;
 import com.scut.crm.entity.Pagination;
 import com.scut.crm.service.impl.ContractServiceImpl;
+import com.scut.crm.service.impl.CustomerServiceImpl;
 import com.scut.crm.utils.ScopeUtils;
-import com.scut.crm.web.vo.ContractSaveRequest;
+import com.scut.crm.utils.convert.ContractConvertUtils;
+import com.scut.crm.web.vo.save.ContractSaveRequest;
 import lombok.Data;
 import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +38,9 @@ public class ContractAction {
     @Autowired
     private ContractServiceImpl contractService;
 
+    @Autowired
+    private CustomerServiceImpl customerService;
+
     /**
      * 合同添加
      * @return
@@ -42,10 +48,22 @@ public class ContractAction {
      * @throws IllegalAccessException
      */
     public String add() throws InvocationTargetException, IllegalAccessException {
+        log.info("ContractAction----saveRequest"+saveRequest);
+        /**获取customer*/
+        Customer customer = customerService.getBySerialNumber(saveRequest.getCont_cust_serialNumber());
 
-//        Contract contract = ConvertEntityUtils.fromSaveRequest2Contract(saveRequest, User);
-//        customerService.save(customer);
-        /**返回到主页面*/
+        /**重点：若同时两个线程进入创建了两个相同的Identifier，则会产生线程安全问题，要加锁确保线程安全*/
+        synchronized(this){
+            /**获取contract的serialNumber*/
+            String contractSerialNumber = contractService.getIdentifier(Contract.class);
+            Contract contract = ContractConvertUtils.fromSaveRequest2Contract(saveRequest, contractSerialNumber, customer);
+            log.info(contract);
+            contractService.save(contract);
+        }
+
+        /**要设置customer的商机状态为签订合同	*/
+        customer.setOpportunity("签订合同");
+        customerService.update(customer);
         return PageReturnConst.ADD_SUCCESS;
     }
 
@@ -58,6 +76,7 @@ public class ContractAction {
         map.put("currentPage",currentPage);
         map.put("customerId",customerId);
         Pagination<Contract> pagination = contractService.listByForeignKey(map);
+        ScopeUtils.getRequestMap().put("customerId", customerId);
         ScopeUtils.getRequestMap().put("pagination", pagination);
         return PageReturnConst.CHECK_SUCCESS;
     }

@@ -1278,7 +1278,7 @@ rangy
 
 					// Implementation as per HTML parsing spec, trusting in the
 					// browser's implementation of innerHTML. See
-					// discussion and base code for this implementation at issue
+					// discussion and convert code for this implementation at issue
 					// 67.
 					// Spec:
 					// http://html5.org/specs/dom-parsing.html#extensions-to-the-range-interface

@@ -14,7 +14,10 @@
 
 			<div class="modal-body">
 				<form class="form-horizontal" id="edit_customer_form">
-					<input type="hidden" id="edit_cust_id" name="updateRequest.cust_id" value=""/>
+
+					<input type="hidden" id="edit_cust_id" name="updateRequest.cust_id" />
+					<input type="hidden" id="edit_cust_serialNumber" name="updateRequest.cust_serialNumber" />
+
 					<div class="form-group">
 						<label for="edit_cust_name" class="col-sm-2 control-label">客户名称</label>
 						<div class="col-sm-10">

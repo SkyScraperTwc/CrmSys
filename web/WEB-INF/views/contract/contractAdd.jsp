@@ -10,6 +10,12 @@
 				</div>
 			</div>
 			<div class="form-group">
+				<label class="col-sm-2 control-label">客户编号</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" placeholder="客户编号" name="saveRequest.cont_cust_serialNumber">
+				</div>
+			</div>
+			<div class="form-group">
 				<label class="col-sm-2 control-label">合同类型</label>
 				<div class="col-sm-10">
 					<select class="form-control" placeholder="合同类型" name="saveRequest.cont_type">

@@ -4,14 +4,14 @@
 	"http://struts.apache.org/dtds/struts-2.3.dtd">
  
 <struts>
-	<package name="user_package" namespace="/userAction" extends="json-default,interceptor" strict-method-invocation="false">
+	<package name="user_package" namespace="/userAction" extends="json-default,interceptor_package" strict-method-invocation="false">
 
 		<action name="*" class="userAction" method="{1}">
 			<result name="user_index">
 				/WEB-INF/views/user/userList.jsp
 			</result>
 
-			<interceptor-ref name="loginInterceptorStack"/>
+			<interceptor-ref name="myInterceptorStack"/>
 		</action>
 
 	</package>

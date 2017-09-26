@@ -2,6 +2,7 @@ package com.scut.crm.service.impl;
 
 import com.scut.crm.constant.PaginationPropertyConst;
 import com.scut.crm.dao.impl.BaseDaoImpl;
+import com.scut.crm.entity.Contract;
 import com.scut.crm.entity.Customer;
 import com.scut.crm.entity.Pagination;
 import com.scut.crm.entity.User;
@@ -85,9 +86,31 @@ public class CustomerServiceImpl extends AbstractBaseService<Customer> {
 		return pagination;
 	}
 
+	/**
+	 * 根据外键userId查询
+	 * @param map
+	 * @return
+	 */
 	@Override
 	public Pagination<Customer> listByForeignKey(Map<String,Object> map) {
-		return null;
+		String hql = "select customer from Customer customer where 1=1";
+		List<Object> paramList = new ArrayList<>();
+		StringBuffer joint = new StringBuffer("");
+
+		String currentPage = (String) map.get("currentPage");
+		String userId = (String) map.get("userId");
+		if(null==currentPage || currentPage.isEmpty()){
+			/**currentPage=1*/
+			currentPage = String.valueOf(PaginationPropertyConst.PAGE_CURRENT_ONE);
+		}
+		if(null!=userId && !userId.isEmpty()){
+			joint.append(" and customer.user.id=?");
+			paramList.add(userId);
+		}
+		int totalRecords = this.getTotalRecords(joint.toString(), paramList.toArray());
+		List<Customer> dataList = baseDao.queryByPage(hql, paramList.toArray(), Integer.valueOf(currentPage), PaginationPropertyConst.PAGE_SIZE_TEN);
+		Pagination<Customer> pagination = new Pagination<>(totalRecords, Integer.valueOf(currentPage), PaginationPropertyConst.PAGE_SIZE_TEN, dataList);
+		return pagination;
 	}
 
 
@@ -104,6 +127,15 @@ public class CustomerServiceImpl extends AbstractBaseService<Customer> {
 	@Override
 	public Customer getById(Integer id) {
 		return (Customer) baseDao.get(Customer.class, id);
+	}
+
+	@Override
+	public Customer getBySerialNumber(String serialNumber) {
+		String hql = "select customer from Customer customer where customer.serialNumber=?";
+		List<Object> paramList = new ArrayList<>();
+		paramList.add(serialNumber);
+		Customer customer = (Customer) baseDao.queryOne(hql,paramList.toArray());
+		return customer;
 	}
 
 }

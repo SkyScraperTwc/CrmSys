@@ -4,8 +4,11 @@
 	"http://struts.apache.org/dtds/struts-2.3.dtd">
  
 <struts>
-	<package name="contract_package" namespace="/contractAction" extends="json-default,interceptor" strict-method-invocation="false">
+	<package name="contract_package" namespace="/contractAction" extends="json-default,interceptor_package" strict-method-invocation="false">
 		<action name="*" class="contractAction" method="{1}">
+			<result name="toLogin">
+				/WEB-INF/views/main/login.jsp
+			</result>
 
 			<result name="check_success">
 				/WEB-INF/views/contract/contractCheck.jsp
@@ -15,11 +18,15 @@
 				/WEB-INF/views/contract/contractList.jsp
 			</result>
 
+			<result name="add_success" type="redirect">
+				/contractAction/list.action
+			</result>
+
 			<result name="delete_success" type="json">
 				<param name="root">deleteJson</param>
 			</result>
 
-			<interceptor-ref name="loginInterceptorStack"/>
+			<interceptor-ref name="myInterceptorStack"/>
 		</action>
 	</package>
 </struts> 

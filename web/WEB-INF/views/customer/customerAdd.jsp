@@ -93,7 +93,7 @@
 						<option value="1">意向客户</option>
 						<option value="2">初步沟通</option>
 						<option value="3">深度沟通</option>
-						<option value="4">签订合同</option>
+						<%--<option value="4">签订合同</option>--%>
 					</select>
 				</div>
 			</div>

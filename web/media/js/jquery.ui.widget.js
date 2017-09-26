@@ -132,7 +132,7 @@ $.widget = function( name, base, prototype ) {
 			var childPrototype = child.prototype;
 
 			// redefine the child widget using the same prototype that was
-			// originally used, but inherit from the new version of the base
+			// originally used, but inherit from the new version of the convert
 			$.widget( childPrototype.namespace + "." + childPrototype.widgetName, constructor, child._proto );
 		});
 		// remove the list of existing child constructors from the old constructor

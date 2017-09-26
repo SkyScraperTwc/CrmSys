@@ -61,4 +61,9 @@ public class UserServiceImpl extends AbstractBaseService<User>{
     public User getById(Integer id) {
         return (User) baseDao.get(User.class,id);
     }
+
+    @Override
+    public User getBySerialNumber(String serialNumber) {
+        return null;
+    }
 }
